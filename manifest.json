@@ -1,0 +1,24 @@
+{
+    "name": "E2EE - Clipboard",
+    "version": "1.0",
+    "manifest_version": 3,
+    "description": "share message with clearly source",
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["inject.js","jquery-3.1.0.min.js","jquery.qrcode.min.js","axios.min.js"]
+            
+        }
+    ],
+    "host_permissions": ["<all_urls>"],
+    "permissions":[
+        "storage",
+        "tabs",
+        "activeTab",
+        "contextMenus",
+        "clipboardWrite"
+      ],
+    "background": {
+        "service_worker": "background.js"
+    }
+}
