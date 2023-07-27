@@ -11,21 +11,21 @@ chrome.contextMenus.create({
 chrome.contextMenus.onClicked.addListener(function (info, tab) {
     if (info.menuItemId == "copyText") {
         navigator.permissions.query({ name: "clipboard-write" }).then((permission) => {
-        if (permission.state === "denied") {
-            throw new Error("Not allowed to write to clipboard.");
-        }
+            if (permission.state === "denied") {
+                throw new Error("Not allowed to write to clipboard.");
+            }
 
-        const clipText = info.selectionText;
-        console.log(clipText);
-        // 將資料傳遞給 content.js
-        chrome.tabs.sendMessage(tab.id, {
-            todo: "copyToClipboard",
-            text: clipText,
-            url: tab.url
-        });
-
+            const clipText = info.selectionText;
+            console.log(clipText);
+            
+            // send message and url to content.js
+            chrome.tabs.sendMessage(tab.id, {
+                todo: "copyToClipboard",
+                text: clipText,
+                url: tab.url
+            });
         }).catch((error) => {
-        console.error(error);
+            console.error(error);
         });
     }
 });
